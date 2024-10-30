@@ -129,7 +129,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Current Square is NOT at Left Edge &
                     // South West Square has A Bomb
                 if(i < 90 && !isLeftEdge && squares[i - 1 + width].classList.contains('bomb')) totalBombs++
+
                 
+                // Add to total If
+                    // Current Square is between 0 - 87 &
+                    // Current Square is NOT at Right Edge &
+                    // South Square has A Bomb
+                if(i < 88 && !isRightEdge && squares[i + 1 + width].classList.contains('bomb')) totalBombs++
+
 
                 // Add totalBombs to Current Square Data Attr
                 squares[i].setAttribute('data', totalBombs);
