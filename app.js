@@ -27,7 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fill each index with 'valid'
         const emptyArray = Array(width*width - bombAmount).fill('valid');
 
-        console.log(bombsArray, emptyArray);
+        // Create gameArray by Joining bombsArray with emptyArray
+        const gameArray = emptyArray.concat(bombsArray);
+        console.log(gameArray);
+
 
         // Iterate until 100 squares ( width * width ) are created 
         for(let i = 0; i < width*width; i++){
