@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Add to total If
                     // Current Square is NOT at 0 &
                     // Current Square is NOT at Left Edge &
-                    // Previous Square (Left) has A Bomb
+                    // Left Square has A Bomb
                 if(i > 0 && !isLeftEdge && squares[i -1].classList.contains('bomb')) totalBombs++
 
                 // Add to total If
@@ -105,9 +105,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(i > 9 && !isRightEdge && squares[i + 1 - width].classList.contains('bomb')) totalBombs++
 
                 // Add to total If
-                    // Current Square is between 11 - 99 &
+                    // Current Square is NOT between 0 - 10 &
                     // North Square has A Bomb 
                 if(i > 10 && squares[i - width].classList.contains('bomb')) totalBombs++
+
+
+                // Add to total If
+                    // Current Square is NOT between 0 - 11 &
+                    // Current Square is NOT at Left Edge &
+                    // North West Square has A Bomb 
+                if(i > 11 && !isLeftEdge && squares[i - 1 - width].classList.contains('bomb')) totalBombs++
 
                 // Add totalBombs to Current Square Data Attr
                 squares[i].setAttribute('data', totalBombs);
