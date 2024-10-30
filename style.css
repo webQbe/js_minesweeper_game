@@ -1,0 +1,19 @@
+/* Style the grid */
+.grid{
+
+    height: 400px;
+    width: 400px;
+    display: flex; /* Make Squares appear Inline */
+    flex-wrap: wrap; /* Fit to Grid */
+    background-color: grey;
+} 
+
+/* Style divs (squares) in .grid div */
+
+.grid div {
+
+    height: 40px;
+    width: 40px;
+
+}
+
