@@ -77,6 +77,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
 
+        // Checking Surrounding Squares for Bombs
+        // Looping Over squares Array (Length = 100)
+
+        for (let i = 0; i < squares.length; i++){
+
+            // Initialize Total
+            let totalBombs = 0; 
+
+            // Define Squares At Left Edge & Right Edge (width = 0)
+            const isLeftEdge = (i % width === 0) 
+            const isRightEdge = (i % width === width - 1) 
+
+
+        }
+
     }
 
     // Create 100 square divs
