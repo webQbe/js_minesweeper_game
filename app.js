@@ -22,6 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fill each index with 'bomb'
         const bombsArray = Array(bombAmount).fill('bomb');
 
+        // For Empty Squares
+        // Create emptyArray of 80 indexes
+        // Fill each index with 'valid'
+        const emptyArray = Array(width*width - bombAmount).fill('valid');
+
+        console.log(bombsArray, emptyArray);
 
         // Iterate until 100 squares ( width * width ) are created 
         for(let i = 0; i < width*width; i++){
