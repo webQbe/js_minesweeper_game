@@ -65,6 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Set Current Iteration Number as Current Square div ID
             square.setAttribute('id', i);
 
+            // Set Current Iteration Number as shuffledArray Index 
+            // To Add either '.bomb' or '.valid' class To Current Square
+            square.classList.add(shuffledArray[i]);
+
             // Add Current Square to Grid
             grid.appendChild(square);
 
