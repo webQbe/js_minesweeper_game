@@ -89,6 +89,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const isLeftEdge = (i % width === 0) 
             const isRightEdge = (i % width === width - 1) 
 
+            // If Current Square does not have a Bomb
+            if(squares[i].classList.contains('valid')){
+                
+                // Add to total If
+                    // Current Square is NOT at 0 &
+                    // Current Square is NOT at Left Edge &
+                    // Previous Square (Left) has A Bomb
+                if(i > 0 && !isLeftEdge && squares[i -1].classList.contains('bomb')) totalBombs++
+
+                // Add to total If
+                    // Current Square is NOT at 0 - 9 &
+                    // Current Square is NOT at Right Edge &
+                    // North East Square has ABomb 
+                if(i > 9 && !isRightEdge && squares[i + 1 - width].classList.contains('bomb')) totalBombs++
+
+                // Add totalBombs to Current Square Data Attr
+                squares[i].setAttribute('data', totalBombs);
+
+                // Log Current Square
+                console.log(squares[i])
+
+            }
+
 
         }
 
