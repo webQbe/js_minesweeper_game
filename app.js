@@ -9,11 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Grid width = 10 Squares
     let width = 10;
 
+    // Set Initial Bomb Amount
+    let bombAmount = 20;
+
     // Intialize Squares Array
     let squares = [];
 
     // Create Board
     function createBoard(){
+
+        // Create bombsArray with 20 indexes
+        // Fill each index with 'bomb'
+        const bombsArray = Array(bombAmount).fill('bomb');
+
 
         // Iterate until 100 squares ( width * width ) are created 
         for(let i = 0; i < width*width; i++){
