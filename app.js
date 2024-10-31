@@ -211,6 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Set Square Background-color to Red
                 square.classList.add('checked')
 
+                // Add a class to Square based on totalBombs
+                if (totalBombs == 1) square.classList.add('one');
+                if (totalBombs == 2) square.classList.add('two');
+                if (totalBombs == 3) square.classList.add('three');
+                if (totalBombs == 4) square.classList.add('four');
+
                 // Display Bomb Count of Surrounding Squares
                 square.innerHTML =  totalBombs;
 

@@ -3,8 +3,6 @@
   align-content: center;
 }
 
-
-
 /* Style the grid */
 .grid{
 
@@ -45,3 +43,22 @@
     color: #e76346;
 
 }
+
+
+/* Change Font color based on totalBombs Number */
+
+.one {
+    color: #e76346;
+  }
+  
+.two {
+    color: #4199d3;
+  }
+  
+.three {
+    color: #57da59;
+  }
+  
+.four{
+    color: #bb41d3;
+  }
