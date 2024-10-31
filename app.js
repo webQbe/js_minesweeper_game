@@ -203,6 +203,11 @@ function click(square) {
             return;
         }
 
+        // If clicked square has no bomb & 
+        // Surrounding Squares also have no bombs
+        // Change Bg-color on click
+        square.classList.add('checked')
+
     }
 
 }
