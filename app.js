@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create Board
     function createBoard(){
 
+        // Show Available Flag amount
+        flagsLeft.innerHTML = bombAmount;
+
         // Create bombsArray with 20 indexes
         // Fill each index with 'bomb'
         const bombsArray = Array(bombAmount).fill('bomb');
