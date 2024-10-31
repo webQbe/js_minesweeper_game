@@ -423,7 +423,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // If matches count reaches 20
             if(matches == bombAmount) {
 
-                console.log('YOU WIN!');
+                // Display result on UI
+                result.innerHTML = 'YOU WIN!';
                 isGameOver = true;
 
             }
