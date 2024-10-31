@@ -12,8 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set Initial Bomb Amount
     let bombAmount = 20;
 
-    // Intialize Squares Array
+    // Initialize Squares Array
     let squares = [];
+
+    // Initialize isGameOver
+    let isGameOver = false;
 
     // Create Board
     function createBoard(){
@@ -177,6 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Define click() & pass square
 function click(square) {
+
+    // Break Cycle if Game Over
+    if(isGameOver) return;
 
     // Check if square has a 'bomb'
     if(square.classList.contains('bomb')){
