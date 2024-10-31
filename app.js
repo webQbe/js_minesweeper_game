@@ -345,6 +345,10 @@ function addFlag(square){
 
             // Add +1 to flags
             flags ++
+
+            // Check if Flag Count == Bomb Amount
+            checkForWin();
+
         } else {
 
                 // If Square has a Flag
@@ -363,7 +367,6 @@ function addFlag(square){
     }
 
 }
-
 
 
 // Define gameOver
@@ -387,3 +390,31 @@ function gameOver(){
 
 }
 
+
+// Check for Win
+// Called when addFlag() adds a Flag
+function checkForWin(){
+
+    // Initialize Matches
+    let matches = 0;
+
+    // Loop through 100 Squares
+    for(let i = 0; i < squares.length; i++){
+
+        // Check if Current Square has Both Flag & Bomb
+        if(squares[i].classList.contains('flag') && squares[i].classList.contains('bomb')){
+
+            // Add +1 to matches
+            matches ++
+        }
+
+        // If matches count reaches 20
+        if(matches == bombAmount) {
+
+            console.log('YOU WIN!');
+
+        }
+
+    }
+
+}
