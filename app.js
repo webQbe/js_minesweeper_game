@@ -383,7 +383,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define gameOver
     function gameOver(){
 
-        console.log('Game Over!');
+        // Display Game Over on UI
+        result.innerHTML = 'GAME OVER!';
         isGameOver = 'true';
 
         // Show All Squares with Bombs
