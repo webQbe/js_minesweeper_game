@@ -75,6 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add Current Square to squares Array
             squares.push(square);
 
+            // Add Event Listener to Current Square
+            square.addEventListener('click', function(e){
+                
+                //Pass Current Square to function
+                click(square); 
+
+                // click() is defined outside createBoard()
+
+            });
+
         }
 
         // Checking Surrounding Squares for Bombs
@@ -88,6 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Define Squares At Left Edge & Right Edge (width = 0)
             const isLeftEdge = (i % width === 0) 
             const isRightEdge = (i % width === width - 1) 
+
+            /* For i = 0, 10, 20, etc., i % 10 === 0, so isLeftEdge is true.
+               For i = 9, 19, 29, etc., i % 10 === 9, so isRightEdge is true.
+            */
 
             // If Current Square does not have a Bomb
             if(squares[i].classList.contains('valid')){
@@ -159,5 +173,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Create 100 square divs
     createBoard();
+
+
+// Define click() & pass square
+function click(square) {
+
+    // Check if square has a 'bomb'
+    if(square.classList.contains('bomb')){
+
+        alert('Game Over!'); 
+
+    }
+
+}
 
 });
