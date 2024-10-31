@@ -1,22 +1,23 @@
+// Initialize Squares Array
+let squares = [];
+
+// Set Initial Grid Width
+// Grid width = 10 Squares
+let width = 10;
+
+// Set Initial Bomb Amount
+let bombAmount = 20;
+
+// Initialize isGameOver
+let isGameOver = false;
+
+
 // Add Event Listener
 // To make sure all HTML is loaded before running JS code
 document.addEventListener('DOMContentLoaded', () => {
 
     // Define DOM Elements
     const grid = document.querySelector('.grid');
-
-    // Set Initial Grid Width
-    // Grid width = 10 Squares
-    let width = 10;
-
-    // Set Initial Bomb Amount
-    let bombAmount = 20;
-
-    // Initialize Squares Array
-    let squares = [];
-
-    // Initialize isGameOver
-    let isGameOver = false;
 
     // Create Board
     function createBoard(){
@@ -36,27 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Create shuffledArray by Shuffling Items in gameArray
         const shuffledArray = gameArray.sort(() => Math.random() - 0.5);
         console.log(shuffledArray);
-
-        /*  How shuffled shuffledArray is created?
-
-            1. Math.random(): 
-            This function generates a random number between 0 and 1.
-
-            2. Math.random() - 0.5: 
-            By subtracting 0.5, you get a random number between -0.5 and 0.5. This result can be positive, negative, or zero.
-
-            3. sort() function: 
-            The sort() method sorts the elements of an array based on the return value of the provided function.
-
-                If the function returns a negative number, the order remains unchanged (meaning a should come before b).
-                If it returns a positive number, the order of a and b is swapped.
-                If it returns 0, the order remains the same.
-
-            In this case:
-
-            Since Math.random() - 0.5 randomly returns a positive or negative number, it effectively shuffles the items in gameArray by randomly deciding whether to switch the position of each pair of elements.
-                
-        */
 
 
         // Iterate until 100 squares ( width * width ) are created 
@@ -171,15 +151,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         }
-
     }
 
     // Create 100 square divs
     createBoard();
 
+});
+
 
 // Define click() & pass square
 function click(square) {
+
+    // Get Square ID
+    let currentId = square.id
 
     // Break Cycle if Game Over
     if(isGameOver) return;
@@ -189,8 +173,6 @@ function click(square) {
 
     // Check if square has a 'bomb'
     if(square.classList.contains('bomb')){
-
-
 
         console.log('Game Over!'); 
 
@@ -214,13 +196,113 @@ function click(square) {
             return;
         }
 
-        // If clicked square has no bomb & 
-        // Surrounding Squares also have no bombs
-        // Change Bg-color on click
-        square.classList.add('checked')
+        // Check neighboring squares of clicked square
+        checkSquare(square, currentId)
 
     }
 
+      // If clicked square has no bomb & 
+     // Surrounding Squares also have no bombs
+    // Add .checked class to Square
+    square.classList.add('checked')
+
 }
 
-});
+// Define checkSquare()
+function checkSquare(square, currentId){
+
+    // Check if square is at either Left or Right edge
+    const isLeftEdge = (currentId % width === 0);
+    const isRightEdge = (currentId % width === width - 1);
+
+    // RECURSION
+    // Check All Surrounding Squares
+    // Run Every 10 ms
+    setTimeout(() => {
+
+        // If Square is NOT at 0 &
+        // If Square is NOT at Left Edge
+        if(currentId > 0 && !isLeftEdge){
+
+            // Auto Click() Left Square
+            const newId = squares[parseInt(currentId - 1)].id;
+            const newSquare = document.getElementById(newId);
+            click(newSquare);
+
+        }
+
+        // If Square is NOT at 0 - 9 &
+        // If Square is NOT at Right Edge
+        if(currentId > 9 && !isRightEdge){
+
+            // Auto Click() North East Square
+            const newId = squares[parseInt(currentId) + 1 - width].id;
+            const newSquare = document.getElementById(newId);
+            click(newSquare);
+
+        }
+
+        // If Square is NOT at 0 - 10 
+        if(currentId > 10){
+
+            // Auto Click() North Square
+            const newId = squares[parseInt(currentId - width)].id;
+            const newSquare = document.getElementById(newId);
+            click(newSquare);
+
+        }
+
+        // If Square is NOT at 0 - 11 &
+        // If Square is NOT at Left Edge
+        if(currentId > 11 && !isLeftEdge){
+
+            // Auto Click() North West Square
+            const newId = squares[parseInt(currentId - 1 - width)].id;
+            const newSquare = document.getElementById(newId);
+            click(newSquare);
+            
+        }
+
+        // If Square is at 0 - 97 &
+        // If Square is NOT at Right Edge
+        if (currentId < 98 && !isRightEdge) {
+
+            // Auto Click() Right Square
+            const newId = squares[parseInt(currentId) + 1].id;
+            const newSquare = document.getElementById(newId);
+            click(newSquare);
+
+        }
+
+        // If Square is at 0 - 89 &
+        // If Square is NOT at Left Edge
+        if(currentId < 90 && !isLeftEdge){
+
+            // Auto Click() South Square
+            const newId = squares[parseInt(currentId) - 1 + width].id;
+            const newSquare = document.getElementById(newId);
+            click(newSquare);
+        }
+
+        // If Square is at 0 - 87 &
+        // If Square is NOT at Right Edge
+        if(currentId < 88 && !isRightEdge){
+            
+            // Auto Click() South East Square
+            const newId = squares[parseInt(currentId) + 1 + width].id;
+            const newSquare = document.getElementById(newId);
+            click(newSquare);
+        }
+
+        // If Square is at 0 - 88
+        if(currentId < 89){
+
+            // Auto Click() South Square 
+            const newId = squares[parseInt(currentId) + width].id;
+            const newSquare = document.getElementById(newId);
+            click(newSquare);
+
+        }
+
+    }, 10)
+}
