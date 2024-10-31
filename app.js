@@ -15,17 +15,22 @@ let isGameOver = false;
 let flags = 0;
 
 
+
 // Add Event Listener
 // To make sure all HTML is loaded before running JS code
 document.addEventListener('DOMContentLoaded', () => {
     
     // Select DOM Elements
     const grid = document.querySelector('.grid');
-    const flagsLeft = document.querySelector('#flags-left')
     const result = document.querySelector('#result')
+    const flagsLeft = document.querySelector('#flags-left')
+
 
     // Create Board
     function createBoard(){
+
+        // Show Available Flag amount
+        flagsLeft.innerHTML = bombAmount;
 
         // Create bombsArray with 20 indexes
         // Fill each index with 'bomb'
@@ -42,27 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Create shuffledArray by Shuffling Items in gameArray
         const shuffledArray = gameArray.sort(() => Math.random() - 0.5);
         console.log(shuffledArray);
-
-/*  How shuffled shuffledArray is created?
-
-            1. Math.random(): 
-            This function generates a random number between 0 and 1.
-
-            2. Math.random() - 0.5: 
-            By subtracting 0.5, you get a random number between -0.5 and 0.5. This result can be positive, negative, or zero.
-
-            3. sort() function: 
-            The sort() method sorts the elements of an array based on the return value of the provided function.
-
-                If the function returns a negative number, the order remains unchanged (meaning a should come before b).
-                If it returns a positive number, the order of a and b is swapped.
-                If it returns 0, the order remains the same.
-
-            In this case:
-
-            Since Math.random() - 0.5 randomly returns a positive or negative number, it effectively shuffles the items in gameArray by randomly deciding whether to switch the position of each pair of elements.
-                
-        */ 
 
 
         // Iterate until 100 squares ( width * width ) are created 
@@ -195,250 +179,258 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create 100 square divs
     createBoard();
 
-});
 
+    // Define click() & pass square
+    function click(square) {
 
-// Define click() & pass square
-function click(square) {
+        // Get Square ID
+        let currentId = square.id
 
-    // Get Square ID
-    let currentId = square.id
+        // Break Cycle if Game Over
+        if(isGameOver) return;
 
-    // Break Cycle if Game Over
-    if(isGameOver) return;
+        // Break Cycle if a square already has .checked OR .flag class
+        if (square.classList.contains('checked') || square.classList.contains('flag')) return;
 
-    // Break Cycle if a square already has .checked OR .flag class
-    if (square.classList.contains('checked') || square.classList.contains('flag')) return;
+        // Check if square has a 'bomb'
+        if(square.classList.contains('bomb')){
 
-    // Check if square has a 'bomb'
-    if(square.classList.contains('bomb')){
-
-        // Call gameOver()
-        gameOver();
-
-    } else {
-
-        // Get Total Bomb Count from Square's Data Attr
-        let totalBombs = square.getAttribute('data');
-
-        // If Total Bomb Count is NOT 0 
-        // (Surrounding Squares Has No Bombs)
-        if(totalBombs != 0){
-
-            // Add .checked Class to Square
-            // Set Square Background-color to Red
-            square.classList.add('checked')
-
-            // Display Bomb Count of Surrounding Squares
-            square.innerHTML =  totalBombs;
-
-            // Break Cycle
-            return;
-        }
-
-        // Check neighboring squares of clicked square
-        checkSquare(square, currentId)
-
-    }
-
-      // If clicked square has no bomb & 
-     // Surrounding Squares also have no bombs
-    // Add .checked class to Square
-    square.classList.add('checked')
-
-}
-
-// Define checkSquare()
-function checkSquare(square, currentId){
-
-    // Check if square is at either Left or Right edge
-    const isLeftEdge = (currentId % width === 0);
-    const isRightEdge = (currentId % width === width - 1);
-
-    // RECURSION
-    // Check All Surrounding Squares
-    // Run Every 10 ms
-    setTimeout(() => {
-
-        // If Square is NOT at 0 &
-        // If Square is NOT at Left Edge
-        if(currentId > 0 && !isLeftEdge){
-
-            // Auto Click() Left Square
-            const newId = squares[parseInt(currentId - 1)].id;
-            const newSquare = document.getElementById(newId);
-            click(newSquare);
-
-        }
-
-        // If Square is NOT at 0 - 9 &
-        // If Square is NOT at Right Edge
-        if(currentId > 9 && !isRightEdge){
-
-            // Auto Click() North East Square
-            const newId = squares[parseInt(currentId) + 1 - width].id;
-            const newSquare = document.getElementById(newId);
-            click(newSquare);
-
-        }
-
-        // If Square is NOT at 0 - 10 
-        if(currentId > 10){
-
-            // Auto Click() North Square
-            const newId = squares[parseInt(currentId - width)].id;
-            const newSquare = document.getElementById(newId);
-            click(newSquare);
-
-        }
-
-        // If Square is NOT at 0 - 11 &
-        // If Square is NOT at Left Edge
-        if(currentId > 11 && !isLeftEdge){
-
-            // Auto Click() North West Square
-            const newId = squares[parseInt(currentId - 1 - width)].id;
-            const newSquare = document.getElementById(newId);
-            click(newSquare);
-            
-        }
-
-        // If Square is at 0 - 97 &
-        // If Square is NOT at Right Edge
-        if (currentId < 98 && !isRightEdge) {
-
-            // Auto Click() Right Square
-            const newId = squares[parseInt(currentId) + 1].id;
-            const newSquare = document.getElementById(newId);
-            click(newSquare);
-
-        }
-
-        // If Square is at 0 - 89 &
-        // If Square is NOT at Left Edge
-        if(currentId < 90 && !isLeftEdge){
-
-            // Auto Click() South Square
-            const newId = squares[parseInt(currentId) - 1 + width].id;
-            const newSquare = document.getElementById(newId);
-            click(newSquare);
-        }
-
-        // If Square is at 0 - 87 &
-        // If Square is NOT at Right Edge
-        if(currentId < 88 && !isRightEdge){
-            
-            // Auto Click() South East Square
-            const newId = squares[parseInt(currentId) + 1 + width].id;
-            const newSquare = document.getElementById(newId);
-            click(newSquare);
-        }
-
-        // If Square is at 0 - 88
-        if(currentId < 89){
-
-            // Auto Click() South Square 
-            const newId = squares[parseInt(currentId) + width].id;
-            const newSquare = document.getElementById(newId);
-            click(newSquare);
-
-        }
-
-    }, 10)
-}
-
-
-// Define addFlag() with Right-Click
-function addFlag(square){
-
-    if (isGameOver) return; // Do not run if Game Over
-
-    // If Square not checked & 
-    // If Flag Count (Init: 0) is Lower than bomb count (Init: 20)
-    if(!square.classList.contains('checked') && (flags < bombAmount)){
-
-        // If Square has no Flag
-        if(!square.classList.contains('flag')){
-
-            // Add .flag class to Square
-            square.classList.add('flag');
-
-            // Add flag icon
-            square.innerHTML = '&#128681';
-
-            // Add +1 to flags
-            flags ++
-
-            // Check if Flag Count == Bomb Amount
-            checkForWin();
+            // Call gameOver()
+            gameOver();
 
         } else {
 
-                // If Square has a Flag
+            // Get Total Bomb Count from Square's Data Attr
+            let totalBombs = square.getAttribute('data');
 
-                // Remove class
-                square.classList.remove('flag')
+            // If Total Bomb Count is NOT 0 
+            // (Surrounding Squares Has No Bombs)
+            if(totalBombs != 0){
 
-                // Remove flag icon
-                square.innerHTML = '';
+                // Add .checked Class to Square
+                // Set Square Background-color to Red
+                square.classList.add('checked')
 
-                // Add -1 to flags
-                flags --
+                // Display Bomb Count of Surrounding Squares
+                square.innerHTML =  totalBombs;
+
+                // Break Cycle
+                return;
+            }
+
+            // Check neighboring squares of clicked square
+            checkSquare(square, currentId)
+
+        }
+
+        // If clicked square has no bomb & 
+        // Surrounding Squares also have no bombs
+        // Add .checked class to Square
+        square.classList.add('checked')
+
+    }
+
+    // Define checkSquare()
+    function checkSquare(square, currentId){
+
+        // Check if square is at either Left or Right edge
+        const isLeftEdge = (currentId % width === 0);
+        const isRightEdge = (currentId % width === width - 1);
+
+        // RECURSION
+        // Check All Surrounding Squares
+        // Run Every 10 ms
+        setTimeout(() => {
+
+            // If Square is NOT at 0 &
+            // If Square is NOT at Left Edge
+            if(currentId > 0 && !isLeftEdge){
+
+                // Auto Click() Left Square
+                const newId = squares[parseInt(currentId - 1)].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+
+            }
+
+            // If Square is NOT at 0 - 9 &
+            // If Square is NOT at Right Edge
+            if(currentId > 9 && !isRightEdge){
+
+                // Auto Click() North East Square
+                const newId = squares[parseInt(currentId) + 1 - width].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+
+            }
+
+            // If Square is NOT at 0 - 10 
+            if(currentId > 10){
+
+                // Auto Click() North Square
+                const newId = squares[parseInt(currentId - width)].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+
+            }
+
+            // If Square is NOT at 0 - 11 &
+            // If Square is NOT at Left Edge
+            if(currentId > 11 && !isLeftEdge){
+
+                // Auto Click() North West Square
+                const newId = squares[parseInt(currentId - 1 - width)].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+                
+            }
+
+            // If Square is at 0 - 97 &
+            // If Square is NOT at Right Edge
+            if (currentId < 98 && !isRightEdge) {
+
+                // Auto Click() Right Square
+                const newId = squares[parseInt(currentId) + 1].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+
+            }
+
+            // If Square is at 0 - 89 &
+            // If Square is NOT at Left Edge
+            if(currentId < 90 && !isLeftEdge){
+
+                // Auto Click() South Square
+                const newId = squares[parseInt(currentId) - 1 + width].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+            }
+
+            // If Square is at 0 - 87 &
+            // If Square is NOT at Right Edge
+            if(currentId < 88 && !isRightEdge){
+                
+                // Auto Click() South East Square
+                const newId = squares[parseInt(currentId) + 1 + width].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+            }
+
+            // If Square is at 0 - 88
+            if(currentId < 89){
+
+                // Auto Click() South Square 
+                const newId = squares[parseInt(currentId) + width].id;
+                const newSquare = document.getElementById(newId);
+                click(newSquare);
+
+            }
+
+        }, 10)
+    }
+
+
+    // Define addFlag() with Right-Click
+    function addFlag(square){
+
+        if (isGameOver) return; // Do not run if Game Over
+
+        // If Square not checked & 
+        // If Flag Count (Init: 0) is Lower than bomb count (Init: 20)
+        if(!square.classList.contains('checked') && (flags < bombAmount)){
+
+            // If Square has no Flag
+            if(!square.classList.contains('flag')){
+
+                // Add .flag class to Square
+                square.classList.add('flag');
+
+                // Add flag icon
+                square.innerHTML = '&#128681';
+
+                // Add +1 to flags
+                flags ++
+
+                // Calculate & Show Current Flag Count
+                flagsLeft.innerHTML = bombAmount - flags
+
+                // Check if Flag Count == Bomb Amount
+                checkForWin();
+
+            } else {
+
+                    // If Square has a Flag
+
+                    // Remove class
+                    square.classList.remove('flag')
+
+                    // Remove flag icon
+                    square.innerHTML = '';
+
+                    // Add -1 to flags
+                    flags --
+
+                    // Calculate & Show Current Flag Count
+                    flagsLeft.innerHTML = bombAmount- flags
+
+            }
 
         }
 
     }
 
-}
+
+    // Define gameOver
+    function gameOver(){
+
+        console.log('Game Over!');
+        isGameOver = 'true';
+
+        // Show All Squares with Bombs
+        squares.forEach(square => {
+
+            // If square has a bomb
+            if(square.classList.contains('bomb')){
+
+                // Add bomb icon
+                square.innerHTML = '💣';
+
+            }
+
+        });
+
+    }
 
 
-// Define gameOver
-function gameOver(){
+    // Check for Win
+    // Called when addFlag() adds a Flag
+    function checkForWin(){
 
-    console.log('Game Over!');
-    isGameOver = 'true';
+        // Initialize Matches
+        let matches = 0;
 
-    // Show All Squares with Bombs
-    squares.forEach(square => {
+        // Loop through 100 Squares
+        for(let i = 0; i < squares.length; i++){
 
-        // If square has a bomb
-        if(square.classList.contains('bomb')){
+            // Check if Current Square has Both Flag & Bomb
+            if(squares[i].classList.contains('flag') && squares[i].classList.contains('bomb')){
 
-            // Add bomb icon
-            square.innerHTML = '💣';
+                // Add +1 to matches
+                matches ++
+            }
 
-        }
+            // If matches count reaches 20
+            if(matches == bombAmount) {
 
-    });
+                console.log('YOU WIN!');
+                isGameOver = true;
 
-}
-
-
-// Check for Win
-// Called when addFlag() adds a Flag
-function checkForWin(){
-
-    // Initialize Matches
-    let matches = 0;
-
-    // Loop through 100 Squares
-    for(let i = 0; i < squares.length; i++){
-
-        // Check if Current Square has Both Flag & Bomb
-        if(squares[i].classList.contains('flag') && squares[i].classList.contains('bomb')){
-
-            // Add +1 to matches
-            matches ++
-        }
-
-        // If matches count reaches 20
-        if(matches == bombAmount) {
-
-            console.log('YOU WIN!');
-            isGameOver = true;
+            }
 
         }
 
     }
 
-}
+});
+
+
