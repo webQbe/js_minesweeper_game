@@ -11,6 +11,9 @@ let bombAmount = 20;
 // Initialize isGameOver
 let isGameOver = false;
 
+// Initialize Flags
+let flags = 0;
+
 
 // Add Event Listener
 // To make sure all HTML is loaded before running JS code
@@ -58,7 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add Current Square to squares Array
             squares.push(square);
 
-            // Add Event Listener to Current Square
+            /* Add Event Listener to Current Square */
+
+            // Normal Click
             square.addEventListener('click', function(e){
                 
                 //Pass Current Square to function
@@ -67,6 +72,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 // click() is defined outside createBoard()
 
             });
+
+            // Right Click
+            square.oncontextmenu = function(e){
+
+                e.preventDefault(); // Prevent Default Action
+
+                // Add / Remove Flag
+                addFlag(square);
+
+            }
+
 
         }
 
@@ -309,6 +325,47 @@ function checkSquare(square, currentId){
 }
 
 
+// Define addFlag() with Right-Click
+function addFlag(square){
+
+    if (isGameOver) return; // Do not run if Game Over
+
+    // If Square not checked & 
+    // If Flag Count (Init: 0) is Lower than bomb count (Init: 20)
+    if(!square.classList.contains('checked') && (flags < bombAmount)){
+
+        // If Square has no Flag
+        if(!square.classList.contains('flag')){
+
+            // Add .flag class to Square
+            square.classList.add('flag');
+
+            // Add flag icon
+            square.innerHTML = '&#128681';
+
+            // Add +1 to flags
+            flags ++
+        } else {
+
+                // If Square has a Flag
+
+                // Remove class
+                square.classList.remove('flag')
+
+                // Remove flag icon
+                square.innerHTML = '';
+
+                // Add -1 to flags
+                flags --
+
+        }
+
+    }
+
+}
+
+
+
 // Define gameOver
 function gameOver(){
 
@@ -329,3 +386,4 @@ function gameOver(){
     });
 
 }
+
