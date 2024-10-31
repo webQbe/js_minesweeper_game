@@ -174,7 +174,8 @@ function click(square) {
     // Check if square has a 'bomb'
     if(square.classList.contains('bomb')){
 
-        console.log('Game Over!'); 
+        // Call gameOver()
+        gameOver();
 
     } else {
 
@@ -305,4 +306,26 @@ function checkSquare(square, currentId){
         }
 
     }, 10)
+}
+
+
+// Define gameOver
+function gameOver(){
+
+    console.log('Game Over!');
+    isGameOver = 'true';
+
+    // Show All Squares with Bombs
+    squares.forEach(square => {
+
+        // If square has a bomb
+        if(square.classList.contains('bomb')){
+
+            // Add bomb icon
+            square.innerHTML = '💣';
+
+        }
+
+    });
+
 }
