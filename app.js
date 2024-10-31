@@ -184,8 +184,13 @@ function click(square) {
     // Break Cycle if Game Over
     if(isGameOver) return;
 
+    // Break Cycle if a square already has .checked OR .flag class
+    if (square.classList.contains('checked') || square.classList.contains('flag')) return;
+
     // Check if square has a 'bomb'
     if(square.classList.contains('bomb')){
+
+
 
         console.log('Game Over!'); 
 
