@@ -19,8 +19,10 @@ let flags = 0;
 // To make sure all HTML is loaded before running JS code
 document.addEventListener('DOMContentLoaded', () => {
     
-    // Select grid
+    // Select DOM Elements
     const grid = document.querySelector('.grid');
+    const flagsLeft = document.querySelector('#flags-left')
+    const result = document.querySelector('#result')
 
     // Create Board
     function createBoard(){
