@@ -18,8 +18,8 @@ let flags = 0;
 // Add Event Listener
 // To make sure all HTML is loaded before running JS code
 document.addEventListener('DOMContentLoaded', () => {
-
-    // Define DOM Elements
+    
+    // Select grid
     const grid = document.querySelector('.grid');
 
     // Create Board
