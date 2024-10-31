@@ -181,7 +181,27 @@ function click(square) {
     // Check if square has a 'bomb'
     if(square.classList.contains('bomb')){
 
-        alert('Game Over!'); 
+        console.log('Game Over!'); 
+
+    } else {
+
+        // Get Total Bomb Count from Square's Data Attr
+        let totalBombs = square.getAttribute('data');
+
+        // If Total Bomb Count is NOT 0 
+        // (Surrounding Squares Has No Bombs)
+        if(totalBombs != 0){
+
+            // Add .checked Class to Square
+            // Set Square Background-color to Red
+            square.classList.add('checked')
+
+            // Display Bomb Count of Surrounding Squares
+            square.innerHTML =  totalBombs;
+
+            // Break Cycle
+            return;
+        }
 
     }
 
