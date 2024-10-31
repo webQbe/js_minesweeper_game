@@ -41,6 +41,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const shuffledArray = gameArray.sort(() => Math.random() - 0.5);
         console.log(shuffledArray);
 
+/*  How shuffled shuffledArray is created?
+
+            1. Math.random(): 
+            This function generates a random number between 0 and 1.
+
+            2. Math.random() - 0.5: 
+            By subtracting 0.5, you get a random number between -0.5 and 0.5. This result can be positive, negative, or zero.
+
+            3. sort() function: 
+            The sort() method sorts the elements of an array based on the return value of the provided function.
+
+                If the function returns a negative number, the order remains unchanged (meaning a should come before b).
+                If it returns a positive number, the order of a and b is swapped.
+                If it returns 0, the order remains the same.
+
+            In this case:
+
+            Since Math.random() - 0.5 randomly returns a positive or negative number, it effectively shuffles the items in gameArray by randomly deciding whether to switch the position of each pair of elements.
+                
+        */ 
+
 
         // Iterate until 100 squares ( width * width ) are created 
         for(let i = 0; i < width*width; i++){
@@ -412,6 +433,7 @@ function checkForWin(){
         if(matches == bombAmount) {
 
             console.log('YOU WIN!');
+            isGameOver = true;
 
         }
 
