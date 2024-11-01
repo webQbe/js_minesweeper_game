@@ -11,5 +11,5 @@
 - If you click on an empty square:
     - If a square around it has a bomb, it will show total number of bombs surrounding you.
     - If surrounding squares do not have bombs, you have to keep clicking squares until you see number of bombs.
-- Right click to flag a square
+- Right click to add flag a square / remove flag
 - To win, you need to flag all squares with bombs
