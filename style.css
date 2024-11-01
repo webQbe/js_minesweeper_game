@@ -46,7 +46,12 @@
 
 .checked {
 
-    background-color: red;
+    height: 40px;
+    width: 40px;
+    border: 2px solid;
+    background-color: #cecab7;
+    border-color: #9c998d;
+    box-sizing: border-box;
 
 }
 
