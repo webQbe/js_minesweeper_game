@@ -20,11 +20,14 @@
 /* Style divs (squares) in .grid div */
 
 .grid div {
-
-    height: 40px;
-    width: 40px;
+  height: 40px;
+  width: 40px;
+  font-size: 25px;
+  text-align: center;
+  font-family: 'Roboto Mono', monospace;
 
 }
+
 
 .bomb {
 
