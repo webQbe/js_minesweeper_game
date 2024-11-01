@@ -10,7 +10,11 @@
     width: 400px;
     display: flex; /* Make Squares appear Inline */
     flex-wrap: wrap; /* Fit to Grid */
-    background-color: grey;
+    background-color: #dcd6bc;
+    margin-left: 50px;
+    margin-top: 20px;
+    border: 10px solid #dcd6bc;
+    margin-bottom: 10px;
 } 
 
 /* Style divs (squares) in .grid div */
